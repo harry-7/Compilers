@@ -1,3 +1,5 @@
+/* This is an double line comment **/
+// This is an inline comment
 int main()
 {
 	int int0 = 6;
