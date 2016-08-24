@@ -30,8 +30,8 @@ if|for|while|else|int|float {printf("Keyword\n%s\n",yytext);}
 \} printf("Close-bracket\n}\n");
 ; printf("Semicolon\n");
 \n {line_num++;}
-{delim} 					/*Ignore whitespaces tabs and newlines*/
-"//".*						/* Inline comments So Ignore*/
+{delim} 					/* Ignore whitespaces tabs and newlines */
+"//".*						/* Inline comments So Ignore */
 "/*"	{comment();}				/* Marks Beginning of comment so remove it */
 . 						/* Discard bad Characters */
 %%
