@@ -1,8 +1,8 @@
-int main() {
+int main () {
     int x;
-    float y;
+    bool y;
 
-    y = 32.56;
+    y = true;
     x = 69;
 
     /*
@@ -10,3 +10,4 @@ int main() {
      */
     // Just like I said, Do not print this
 }
+hello
