@@ -1,6 +1,7 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 	extern int yylex();
 	extern int yyparse();
 	extern FILE *yyin;
@@ -8,15 +9,17 @@
 	extern int line_num;
 	void yyerror(const char *s);
 %}
-%token IDENTIFIER TYPE INTEGER BOOLEAN 
-%token START EQ SC OP CP OB CB OSB CSB ADDOP MULOP
+%union{
+	char *value;
+}
+%token<value> IDENTIFIER TYPE INTEGER BOOLEAN ADDOP MULOP
+%token START EQ SC OP CP OB CB OSB CSB 
 %%
 Program:
 	START OP CP OB Declarations Statements CB { fprintf(output_file, "Program encountered\n");}
 	;
 Declarations:
-	/* empty string */
-	| Declarations Declaration
+	Declarations Declaration
 	| Declaration
 	;
 Declaration:
@@ -32,8 +35,7 @@ Declaration:
 	}
 	;
 Statements:
-	/* empty string */
-	| Statements Statement
+	Statements Statement
 	| Statement
 	;
 Statement:

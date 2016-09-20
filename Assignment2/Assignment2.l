@@ -1,22 +1,23 @@
 %{
 #include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include "Assignment2.tab.h"
-static void comment(void);
-int line_num = 0;
+	static void comment(void);
+	int line_num = 0;
 %}
 digit [0-9]
 letter [a-zA-Z]
 alpha [0-9a-zA-Z]
 delim [ \t]+
 %%
-{digit}+ { yylval = strdup(yytext);return INTEGER; }
+{digit}+ { yylval.value = strdup(yytext);return INTEGER; }
 "int main" {return START; }
-"int"|"bool" { yylval = strdup(yytext);return TYPE; }
-true|false { yylval = strdup(yytext); return BOOLEAN; }
-{letter}{alpha}* { yylval = strdup(yytext); return IDENTIFIER; }
-"+"|"-" { yylval = strdup(yytext);return ADDOP; }
-"/"|"*"|"%" { yylval = strdup(yytext);return MULOP; }
+"int"|"bool" { yylval.value = strdup(yytext);return TYPE; }
+true|false { yylval.value = strdup(yytext); return BOOLEAN; }
+{letter}{alpha}* { yylval.value = strdup(yytext); return IDENTIFIER; }
+"+"|"-" { yylval.value = strdup(yytext);return ADDOP; }
+"/"|"*"|"%" { yylval.value = strdup(yytext);return MULOP; }
 "(" { return OP; }
 ")" { return CP; }
 "{" { return OB; }
