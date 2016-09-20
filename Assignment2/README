@@ -1,0 +1,5 @@
+## Compiling
+Run make to obtain executable a.out
+## Running
+./a.out <input_file>
+The output will be generated to bison_output.txt

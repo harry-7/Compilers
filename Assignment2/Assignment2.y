@@ -12,26 +12,28 @@
 %token START EQ SC OP CP OB CB OSB CSB ADDOP MULOP
 %%
 Program:
-	START OB Declarations Statements CB { fprintf(output_file, "Program Encountered\n");}
+	START OP CP OB Declarations Statements CB { fprintf(output_file, "Program encountered\n");}
 	;
 Declarations:
-	Declarations Declaration|
-	Declaration
+	/* empty string */
+	| Declarations Declaration
+	| Declaration
 	;
 Declaration:
 	TYPE IDENTIFIER SC {
-	if (strcmp($1,"int") == 0) fprintf(output_file, "int");
-	else if (strcmp($1,"bool") == 0) fprintf(output_file, "bool");
+	if (strcmp($1,"int") == 0) fprintf(output_file, "Int");
+	else if (strcmp($1,"bool") == 0) fprintf(output_file, "Boolean");
 	fprintf(output_file, " declaration encountered\nId=%s\n",$2);
 	}
 	| TYPE IDENTIFIER OSB INTEGER CSB SC {
-	if (strcmp($1,"int") == 0) fprintf(output_file, "int");
-	else if (strcmp($1,"bool") == 0) fprintf(output_file, "bool");
-	fprintf(output_file, "Boolean declaration encountered\nId=%s\nSize=%s\n",$2,$4);
+	if (strcmp($1,"int") == 0) fprintf(output_file, "Int");
+	else if (strcmp($1,"bool") == 0) fprintf(output_file, "Boolean");
+	fprintf(output_file, " declaration encountered\nId=%s\nSize=%s\n",$2,$4);
 	}
 	;
 Statements:
-	Statements Statement
+	/* empty string */
+	| Statements Statement
 	| Statement
 	;
 Statement:
@@ -40,7 +42,7 @@ Statement:
 	;
 Assignment:
 	IDENTIFIER EQ Expression SC {fprintf(output_file, "Assignment operation encountered\n");}
-	| IDENTIFIER OSB INTEGER CSB EQ Expression SC {fprintf(output_file, "Assignment operation encountered\n");}
+	| IDENTIFIER OSB Expression CSB EQ Expression SC {fprintf(output_file, "Assignment operation encountered\n");}
 	;
 Expression:
 	Term ADDOP Term { 
@@ -58,22 +60,26 @@ Term:
 	| Factor
 Factor:
 	IDENTIFIER
-	| OSB IDENTIFIER CSB
+	| IDENTIFIER OSB Integer CSB
 	| Literal
 	| OP Expression CP
 	;
 Literal:
-	INTEGER { fprintf (output_file, "Integer literal encountered\nValue=%s\n",$1);}
+	Integer
 	| BOOLEAN { fprintf (output_file, "Boolean literal encountered\nValue=%s\n",$1);} 
+	;
+Integer:
+	INTEGER { fprintf (output_file, "Integer literal encountered\nValue=%s\n",$1);}
 	;
 %%
 int main(int argc, char **argv) {
 	output_file = fopen("bison_output.txt","w");
-	FILE *input = fopen("test_input", "r");
-	if (!input) {
-		yyerror("I can't open the given file!");
-		return -1;
-	}
+
+	if(argc == 1) yyerror("No Input File Given");
+
+	FILE *input = fopen(argv[1], "r");
+
+	if (!input)  yyerror("I can't open the given file!");
 	yyin = input;
 	
 	do {
@@ -82,6 +88,6 @@ int main(int argc, char **argv) {
 	printf("Success\n");
 }
 void yyerror(const char *s) {
-	printf("Syntax Error\n");
+	printf("Syntax Error at line %d\n",line_num);
 	exit(-1);
 }

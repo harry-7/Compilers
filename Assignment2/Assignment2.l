@@ -11,7 +11,7 @@ alpha [0-9a-zA-Z]
 delim [ \t]+
 %%
 {digit}+ { yylval = strdup(yytext);return INTEGER; }
-"int main ()" {return START; }
+"int main" {return START; }
 "int"|"bool" { yylval = strdup(yytext);return TYPE; }
 true|false { yylval = strdup(yytext); return BOOLEAN; }
 {letter}{alpha}* { yylval = strdup(yytext); return IDENTIFIER; }
