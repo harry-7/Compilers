@@ -47,14 +47,14 @@ Assignment:
 	| IDENTIFIER OSB Expression CSB EQ Expression SC {fprintf(output_file, "Assignment operation encountered\n");}
 	;
 Expression:
-	Term ADDOP Term { 
+	Expression ADDOP Term { 
 		if(strcmp($2,"+") == 0) fprintf(output_file, "Addition expression encountered\n");
 		else fprintf(output_file, "Subtraction expression encountered\n");
 	}
 	| Term
 	;
 Term:
-	Factor MULOP Factor {
+	Term MULOP Factor {
 		if (strcmp($2,"/") == 0) fprintf(output_file, "Division expression encountered\n");
 		else if (strcmp($2,"*") == 0) fprintf(output_file, "Multiplication expression encountered\n");
 		else if (strcmp($2,"%") == 0) fprintf(output_file, "Modulus expression encountered\n");

@@ -2,7 +2,7 @@ int main () {
 
     int y;
     int p;
-    y = y+2;
+    y = y+2+3;
     /*
      * y = You must not print the stuff in the commments
      */

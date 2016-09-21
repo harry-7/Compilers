@@ -9,4 +9,4 @@ lex.yy.c: Assignment2.l
 Assignment2.tab.c: Assignment2.y
 	bison -d Assignment2.y
 clean:
-	rm *.c *.h a.out
+	rm *.c *.h a.out bison_output.txt
