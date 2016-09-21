@@ -5,5 +5,8 @@ Id=p
 Integer literal encountered
 Value=2
 Addition expression encountered
+Integer literal encountered
+Value=3
+Addition expression encountered
 Assignment operation encountered
 Program encountered

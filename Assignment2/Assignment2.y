@@ -20,7 +20,7 @@ Program:
 	;
 Declarations:
 	Declarations Declaration
-	| Declaration
+	|
 	;
 Declaration:
 	TYPE IDENTIFIER SC {
@@ -36,7 +36,7 @@ Declaration:
 	;
 Statements:
 	Statements Statement
-	| Statement
+	|
 	;
 Statement:
 	SC
