@@ -2,8 +2,8 @@
 
 using namespace std;
 
-enum exprType {binary = 1; location = 2; literal = 3; enclExpr = 4;}
-enum literalType {Int = 1; Bool = 2;}
+enum exprType {binary = 1; location = 2; literal = 3; enclExpr = 4;};
+enum literalType {Int = 1; Bool = 2;};
 union Node{
 	int number;
 	char* value;
@@ -31,6 +31,7 @@ union Node{
 	~Node(){};
 };
 typedef union Node YYSTYPE;
+
 /* Classes 
    class Prog;
    class Decls;
@@ -68,7 +69,7 @@ private:
 	string dataType;
 	class Var* var;
 public:
-	Decl(string,var);
+	Decl(string,class Var*);
 	class Var* getVar();
 	void traverse();
 };
@@ -87,7 +88,7 @@ class Expr{
 protected:
 	exprType etype;
 public:
-	void setEtype(exprType x);
+	void setEtype(exprType x){etype = x;}
 	exprType getEtype();
 	string toString();
 	virtual void traverse();
@@ -107,7 +108,7 @@ private:
 	class Expr* rhs;
 	string opr;
 public:
-	BinExpr(class Expr* left,string opr,class Expr* right);
+	BinExpr(class Expr*, string, class Expr*);
 	void traverse();
 	string toString();
 };
@@ -121,6 +122,9 @@ public:
 	Location(string,string,class Expr*);
 	Location(string,string);
 	void traverse();
+	string getVar();
+	bool is_array();
+	string getExpr();
 	string toString();
 };
 
@@ -172,7 +176,7 @@ private:
 	class Location* loc;
 	class Expr* expr;
 public:
-	Assignment(class Location* loc, class Expr* expr);
+	Assignment(class Location*, class Expr*);
 	void traverse();
 };
 

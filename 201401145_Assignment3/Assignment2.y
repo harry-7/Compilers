@@ -56,8 +56,7 @@ Statement:
 	| Assignment
 	;
 Assignment:
-	IDENTIFIER EQ Expression SC {fprintf(output_file, "Assignment operation encountered\n");}
-	| IDENTIFIER OSB Expression CSB EQ Expression SC {fprintf(output_file, "Assignment operation encountered\n");}
+	| Location EQ Expression SC
 	;
 Expression:
     Location
@@ -75,11 +74,8 @@ Location:
     ;
 
 Literal:
-	Integer
-	| BOOLEAN { fprintf (output_file, "Boolean literal encountered\nValue=%s\n",$1);} 
-	;
-Integer:
 	INTEGER { fprintf (output_file, "Integer literal encountered\nValue=%s\n",$1);}
+	| BOOLEAN { fprintf (output_file, "Boolean literal encountered\nValue=%s\n",$1);} 
 	;
 %%
 int main(int argc, char **argv) {
