@@ -1,14 +1,15 @@
 TARGET = a.out
 CC = g++
 CFLAGS = -lfl
+FLAGS=-w -Wno-deprecated -g -std=c++11
 all: $(TARGET)
-$(TARGET): lex.yy.c Assignment2.tab.c
-	$(CC) lex.yy.c Assignment2.tab.c $(CFLAGS)
-lex.yy.c: Assignment2.l
-	flex Assignment2.l
-Assignment2.tab.c: Assignment2.y
-	bison -d Assignment2.y
+$(TARGET): lex.yy.c Assignment3.tab.c Classes.cpp ClassDefs.h
+	$(CC) $(FLAGS) lex.yy.c Assignment3.tab.c Classes.cpp $(CFLAGS)
+lex.yy.c: Assignment3.l
+	flex Assignment3.l
+Assignment3.tab.c: Assignment3.y
+	bison -vd Assignment3.y
 clean:
 	rm *.c 
 veryclean:
-	rm -f *.c Assignment2.tab.h a.out bison_output.txt *.output
+	rm -f *.c Assignment3.tab.h a.out XML_* *.output

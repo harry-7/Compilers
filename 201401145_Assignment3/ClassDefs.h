@@ -2,8 +2,8 @@
 
 using namespace std;
 
-enum exprType {binary = 1; location = 2; literal = 3; enclExpr = 4;};
-enum literalType {Int = 1; Bool = 2;};
+enum exprType { binary = 1, location = 2, literal = 3, enclExpr = 4 };
+enum literalType { Int = 1, Bool = 2 };
 union Node{
 	int number;
 	char* value;
@@ -21,7 +21,7 @@ union Node{
 
 	Node(){
 		number = 0;
-		string = NULL;
+		value = NULL;
 		var = NULL;
 		decls = NULL;
 		decl = NULL;
@@ -31,7 +31,7 @@ union Node{
 	~Node(){};
 };
 typedef union Node YYSTYPE;
-
+#define YYSTYPE_IS_DECLARED 1
 /* Classes 
    class Prog;
    class Decls;
@@ -57,7 +57,7 @@ class Var{
 		unsigned int length;
 	public:
 		/* Constructors */
-		Var(string,string,length);
+		Var(string,string,unsigned int);
 		Var(string,string);
 		/* Methods */
 		void setDataType(string);
@@ -90,8 +90,8 @@ protected:
 public:
 	void setEtype(exprType x){etype = x;}
 	exprType getEtype();
-	string toString();
-	virtual void traverse();
+	virtual string toString(){}
+	virtual void traverse(){}
 };
 
 class EnclExpr:public Expr{
@@ -99,6 +99,7 @@ private:
 	class Expr* expr;
 public:
 	EnclExpr(class Expr*);
+	string toString();
 	void traverse();
 };
 
@@ -124,7 +125,7 @@ public:
 	void traverse();
 	string getVar();
 	bool is_array();
-	string getExpr();
+	class Expr* getExpr();
 	string toString();
 };
 
@@ -132,9 +133,9 @@ class Literal:public Expr{
 protected:
 	literalType ltype;
 public:
-	virtual void traverse();
-	virtual int getValue();
-	virtual string toString();
+	virtual void traverse(){}
+	virtual int getValue(){}
+	virtual string toString(){}
 };
 
 class intLiteral:public Literal{
@@ -158,7 +159,7 @@ public:
 
 class Stmt{
 public:
-	virtual void traverse();
+	virtual void traverse(){}
 };
 
 class Stmts{

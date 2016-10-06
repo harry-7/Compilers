@@ -3,20 +3,23 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
-#include "Assignment2.tab.h"
-	int line_num = 0;
+#include "ClassDefs.h"
+#include "Assignment3.tab.h"
 #define YY_DECL extern "C" int yylex()
+	extern union Node yylval;
+	using namespace std;
+	int line_num = 0;
 %}
 digit [0-9]
 letter [a-zA-Z]
 alpha [0-9a-zA-Z]
 delim [ \t]+
 %%
-{digit}+ { yylval.value = strdup(yytext);return INTEGER; }
+{digit}+ { yylval.number = atoi(yytext);return INTEGER; }
 "int main" {return START; }
 "int"|"bool" { yylval.value = strdup(yytext);return TYPE; }
 true|false { yylval.value = strdup(yytext); return BOOLEAN; }
-{letter}{alpha}* { yylval.value = strdup(yytext); return IDENTIFIER; }
+{letter}{alpha}* { yylval.value = strdup(yytext); return ID; }
 "+" { yylval.value = strdup(yytext);return ADD; }
 "-" { yylval.value = strdup(yytext);return SUB; }
 "/" { yylval.value = strdup(yytext);return DIV; }
