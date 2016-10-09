@@ -54,7 +54,7 @@ Declaration:
 	;
 Var:
 	ID {$$ = new Var(string("Normal"),string($1));}
-	| ID OSB INTEGER CSB SC {$$ = new Var(string("Array"),string($1),$3);}
+	| ID OSB INTEGER CSB {$$ = new Var(string("Array"),string($1),$3);}
 	;
 Statements:
 	/* Empty */ { $$ = new Stmts(); }
@@ -84,8 +84,6 @@ Literal:
 	;
 %%
 int main(int argc, char **argv) {
-	output_file = fopen("bison_output.txt","w");
-
 	if(argc == 1) {
 		printf("No Input File Given\n");
 		exit(-1);

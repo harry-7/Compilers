@@ -13,16 +13,16 @@ string getOperation(string opr){
 	if(opr.compare("+") == 0){
 		return string("Addition");
 	}
-	else if (opr.compare("-")){
+	else if (opr.compare("-") == 0){
 		return string("Subtraction");
 	}
-	else if(opr.compare("*")){
+	else if(opr.compare("*")  == 0){
 		return string("Multiplication");
 	}
-	else if (opr.compare("/")){
+	else if (opr.compare("/")  == 0){
 		return string("Division");
 	}
-	else if (opr.compare("%")){
+	else if (opr.compare("%") == 0){
 		return string("Modulus");
 	}
 }
@@ -120,6 +120,7 @@ void Decls::push_back(class Decl* var){
 
 void Stmts::push_back(class Stmt* stmt){
 	stmts.push_back(stmt);
+	cnt++;
 }
 
 string BinExpr::toString(){
@@ -127,7 +128,7 @@ string BinExpr::toString(){
 }
 
 string EnclExpr::toString(){
-	return "(" + expr->toString() + ")";
+	return expr->toString();
 }
 string Location::toString(){
 	if(location_type.compare("Number") == 0){
@@ -257,9 +258,7 @@ void boolLiteral::traverse(){
 
 void EnclExpr::traverse(){
 	TBS;
-	out << "(";
 	expr->traverse();
-	out << ")\n";
 }
 
 void BinExpr::traverse(){
